@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { PubSub } from 'graphql-subscriptions'
 
 import { UsersModule } from '../users/users.module'
 
@@ -10,7 +11,14 @@ import { TilesService } from './tiles.service'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Tile]), UsersModule],
-  providers: [TilesService, TilesResolver],
+  providers: [
+    TilesService,
+    TilesResolver,
+    {
+      provide: 'PUB_SUB',
+      useValue: new PubSub(),
+    },
+  ],
   controllers: [TilesController],
 })
 export class TilesModule {}

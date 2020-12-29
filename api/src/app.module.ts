@@ -21,6 +21,7 @@ import { UsersModule } from './users/users.module'
       }),
     }),
     GraphQLModule.forRoot({
+      playground: true,
       introspection: true,
       sortSchema: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -31,7 +32,5 @@ import { UsersModule } from './users/users.module'
     UsersModule,
     TilesModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

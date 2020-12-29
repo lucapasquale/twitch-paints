@@ -5,6 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "lint": "prettier --write --check 'src/**/*.ts?(x)'",
+    "generate-gql-types": "graphql-codegen --config codegen.yml",
     "dev": "next",
     "build": "next build",
     "start": "next start"
@@ -14,9 +16,16 @@
     "graphql": "^15.4.0",
     "next": "^10.0.4",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.19.0",
+    "@graphql-codegen/introspection": "^1.18.0",
+    "@graphql-codegen/typescript": "^1.17.11",
+    "@graphql-codegen/typescript-document-nodes": "^1.17.8",
+    "@graphql-codegen/typescript-operations": "^1.17.8",
+    "@graphql-codegen/typescript-react-apollo": "^2.0.7",
     "@types/graphql": "^14.5.0",
     "@types/node": "^14.14.16",
     "@types/react": "^17.0.0",

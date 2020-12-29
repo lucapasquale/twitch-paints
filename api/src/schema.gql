@@ -2,12 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  updateTile(colorCode: Int!, x: Int!, y: Int!): Tile!
+}
+
 type Query {
   board: [Tile!]!
 }
 
 type Subscription {
-  commentAdded: Boolean!
+  tileUpdated: Tile!
 }
 
 type Tile {
