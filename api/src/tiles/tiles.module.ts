@@ -5,7 +5,6 @@ import { PubSub } from 'graphql-subscriptions'
 import { UsersModule } from '../users/users.module'
 
 import { Tile } from './tile.entity'
-import { TilesController } from './tiles.controller'
 import { TilesResolver } from './tiles.resolver'
 import { TilesService } from './tiles.service'
 
@@ -19,6 +18,5 @@ import { TilesService } from './tiles.service'
       useValue: new PubSub(),
     },
   ],
-  controllers: [TilesController],
 })
 export class TilesModule {}

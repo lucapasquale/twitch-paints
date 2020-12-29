@@ -4,10 +4,11 @@ import { ConfigService } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { CommonModule } from './common/common.module'
 import { SnakeNamingStrategy } from './common/snake-naming-strategy'
+import { CommonModule } from './common/common.module'
 import { TilesModule } from './tiles/tiles.module'
 import { UsersModule } from './users/users.module'
+import { TwitchModule } from './twitch/twitch.module'
 
 @Module({
   imports: [
@@ -29,8 +30,9 @@ import { UsersModule } from './users/users.module'
     }),
 
     CommonModule,
-    UsersModule,
     TilesModule,
+    TwitchModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
