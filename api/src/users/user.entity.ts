@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm'
+
+import { Tile } from '../tiles/tile.entity'
 
 @Entity()
 export class User {
@@ -13,4 +22,7 @@ export class User {
 
   @Column()
   name: string
+
+  @OneToMany(() => Tile, (tile) => tile.user)
+  tiles: Tile[]
 }

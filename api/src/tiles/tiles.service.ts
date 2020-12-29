@@ -10,12 +10,16 @@ export class TilesService {
   private tileRepo: Repository<Tile>
 
   async getBoard() {
-    return this.tileRepo
+    return await this.tileRepo
       .createQueryBuilder('tiles')
       .distinctOn(['tiles.x', 'tiles.y'])
       .orderBy('tiles.x')
       .addOrderBy('tiles.y')
       .addOrderBy('tiles.created_at')
       .getMany()
+  }
+
+  async save(tile: Partial<Tile>) {
+    return await this.tileRepo.save(tile)
   }
 }

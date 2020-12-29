@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  board: [Tile!]!
+}
+
+type Subscription {
+  commentAdded: Boolean!
+}
+
+type Tile {
+  color: String!
+  id: ID!
+  x: Int!
+  y: Int!
+}

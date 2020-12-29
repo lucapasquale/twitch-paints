@@ -1,5 +1,7 @@
+import { join } from 'path'
 import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { CommonModule } from './common/common.module'
@@ -17,6 +19,12 @@ import { UsersModule } from './users/users.module'
         entities: ['dist/**/*.entity{.ts,.js}'],
         namingStrategy: new SnakeNamingStrategy(),
       }),
+    }),
+    GraphQLModule.forRoot({
+      introspection: true,
+      sortSchema: true,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      installSubscriptionHandlers: true,
     }),
 
     CommonModule,

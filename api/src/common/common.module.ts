@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
-import { StatusController } from './status.controller'
 import { config } from './config'
 import { Logger } from './logger'
+import { GraphqlLoggingPlugin } from './logger/graphql-logger.plugin'
 
 @Module({
   imports: [
@@ -13,8 +13,7 @@ import { Logger } from './logger'
       envFilePath: getEnvFilePath(),
     }),
   ],
-  controllers: [StatusController],
-  providers: [Logger],
+  providers: [Logger, GraphqlLoggingPlugin],
 })
 export class CommonModule {}
 

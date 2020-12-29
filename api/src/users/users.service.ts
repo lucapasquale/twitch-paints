@@ -9,7 +9,7 @@ export class UsersService {
   @InjectRepository(User)
   private userRepo: Repository<User>
 
-  async upsertUser(user: Pick<User, 'name'>): Promise<User> {
+  async upsert(user: Partial<User>): Promise<User> {
     return await this.userRepo.save(user)
   }
 }
