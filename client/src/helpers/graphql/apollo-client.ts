@@ -16,13 +16,13 @@ export function useApollo(initialState = {}) {
 export function createApolloClient(_?: any, __?: NextPageContext) {
   const wsLink = (process as any).browser
     ? new WebSocketLink({
-        uri: `ws://${config.API_URL}/graphql`,
+        uri: `${config.SUBSCRIPTIONS_URL}/graphql`,
         options: { reconnect: true },
       })
     : null
 
   const httpLink = new HttpLink({
-    uri: `http://${config.API_URL}/graphql`,
+    uri: `${config.API_URL}/graphql`,
   })
 
   const link = (process as any).browser
