@@ -7,13 +7,11 @@ export function parseMessage(message: string) {
   }
 
   const x = matches[1].charCodeAt(0) - 96
-  console.log({ x })
   if (x <= 0 || x > MAX_TILES) {
     return null
   }
 
   const y = parseInt(matches[2])
-  console.log({ y })
   if (y <= 0 || y > MAX_TILES) {
     return null
   }

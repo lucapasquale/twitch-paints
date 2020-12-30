@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type Mutation {
-  updateTile(color: String!, x: Int!, y: Int!): Tile!
+  updateTile(color: String!, secretCode: String!, x: Int!, y: Int!): Tile!
 }
 
 type Query {

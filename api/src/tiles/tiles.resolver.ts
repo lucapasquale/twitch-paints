@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { Args, Int, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql'
 import { PubSubEngine } from 'graphql-subscriptions'
 
@@ -15,7 +16,8 @@ export class TilesResolver {
     @Inject('PUB_SUB')
     private readonly pubSub: PubSubEngine,
     private readonly tilesService: TilesService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly configService: ConfigService
   ) {}
 
   @Query(() => [Tile])
@@ -27,8 +29,13 @@ export class TilesResolver {
   async updateTile(
     @Args({ name: 'x', type: () => Int }) x: number,
     @Args({ name: 'y', type: () => Int }) y: number,
-    @Args({ name: 'color', type: () => String }) color: string
+    @Args({ name: 'color', type: () => String }) color: string,
+    @Args({ name: 'secretCode', type: () => String }) secretCode: string
   ) {
+    if (secretCode !== this.configService.get('graphqlSecretCode')) {
+      throw new Error(`You weren't supposed to be here ( ͡° ͜ʖ ͡°)`)
+    }
+
     const user = await this.usersService.upsert({ name: 'mutation' })
     const tile = await this.tilesService.save({ x, y, color, user })
 
