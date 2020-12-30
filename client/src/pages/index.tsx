@@ -4,9 +4,9 @@ import { Board } from '../modules/Home/components/Board'
 
 const Page = () => {
   return (
-    <div>
+    <main style={{ display: 'grid', placeItems: 'center' }}>
       <Board />
-    </div>
+    </main>
   )
 }
 

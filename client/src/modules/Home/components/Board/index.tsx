@@ -4,10 +4,11 @@ import { Tile } from '../../../../helpers/graphql/generated'
 
 import { useBoardQuery } from '../../graphql/use-board'
 import { useTileUpdatedSubscription } from '../../graphql/use-tile-updated'
+import { Axis } from './Axis'
 
 const CANVAS_SIZE_PX = 720
 const CANVAS_TILE_COUNT = 20
-const TILE_SIZE = CANVAS_SIZE_PX / CANVAS_TILE_COUNT
+export const TILE_SIZE = CANVAS_SIZE_PX / CANVAS_TILE_COUNT
 
 type Props = {}
 
@@ -51,10 +52,22 @@ export const Board: FC<Props> = ({}) => {
   }, [tileUpdated, canvasCtx])
 
   if (loading) {
-    return <div>Loading</div>
+    return null
   }
 
-  return <canvas ref={canvasRef} />
+  return (
+    <section style={{ display: 'flex', alignItems: 'center' }}>
+      <Axis orientation="vertical" maxValue={CANVAS_TILE_COUNT} />
+
+      <div>
+        <Axis orientation="horizontal" maxValue={CANVAS_TILE_COUNT} />
+        <canvas ref={canvasRef} style={{ display: 'block' }} />
+        <Axis orientation="horizontal" maxValue={CANVAS_TILE_COUNT} />
+      </div>
+
+      <Axis orientation="vertical" maxValue={CANVAS_TILE_COUNT} />
+    </section>
+  )
 }
 
 function drawTile(tile: Tile, context: CanvasRenderingContext2D) {
