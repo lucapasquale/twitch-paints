@@ -9,7 +9,12 @@ export class UsersService {
   @InjectRepository(User)
   private userRepo: Repository<User>
 
-  async upsert(user: Partial<User>): Promise<User> {
+  async upsert(user: Pick<User, 'name'>): Promise<User> {
+    const existingUser = await this.userRepo.findOne({ name: user.name })
+    if (existingUser) {
+      return existingUser
+    }
+
     return await this.userRepo.save(user)
   }
 }

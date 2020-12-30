@@ -1,10 +1,12 @@
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { PubSub } from 'graphql-subscriptions'
 
 import { config } from './config'
 import { Logger } from './logger'
 import { GraphqlLoggingPlugin } from './logger/graphql-logger.plugin'
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -13,7 +15,15 @@ import { GraphqlLoggingPlugin } from './logger/graphql-logger.plugin'
       envFilePath: getEnvFilePath(),
     }),
   ],
-  providers: [Logger, GraphqlLoggingPlugin],
+  providers: [
+    Logger,
+    GraphqlLoggingPlugin,
+    {
+      provide: 'PUB_SUB',
+      useValue: new PubSub(),
+    },
+  ],
+  exports: ['PUB_SUB'],
 })
 export class CommonModule {}
 

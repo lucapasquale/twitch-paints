@@ -1,14 +1,28 @@
 import * as fs from 'fs'
+import { ConfigService } from '@nestjs/config'
+import { PubSubEngine } from 'graphql-subscriptions'
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common'
+
 import { RefreshableAuthProvider, StaticAuthProvider } from 'twitch-auth'
 import { ChatClient } from 'twitch-chat-client'
-import { Injectable, OnModuleInit } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+
+import { TilesService } from '../tiles/tiles.service'
+import { TILE_UPDATED_NAME } from '../tiles/tiles.resolver'
+import { UsersService } from '../users/users.service'
+
+import { parseMessage } from './logic'
 
 @Injectable()
 export class TwitchService implements OnModuleInit {
   private client: ChatClient
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    @Inject('PUB_SUB')
+    private readonly pubSub: PubSubEngine,
+    private readonly tilesService: TilesService,
+    private readonly usersService: UsersService,
+    private readonly configService: ConfigService
+  ) {}
 
   async onModuleInit() {
     const auth = this.generateAuth()
@@ -16,7 +30,18 @@ export class TwitchService implements OnModuleInit {
     this.client = new ChatClient(auth, { channels: ['luke094'] })
     await this.client.connect()
 
-    this.client.onMessage(this.onMessage)
+    this.client.onMessage(async (_: string, userName: string, message: string) => {
+      const parsedMessage = parseMessage(message)
+      if (!parsedMessage) {
+        return null
+      }
+
+      const user = await this.usersService.upsert({ name: userName })
+      const tile = await this.tilesService.save({ user, ...parsedMessage })
+
+      this.pubSub.publish(TILE_UPDATED_NAME, { [TILE_UPDATED_NAME]: tile })
+      return tile
+    })
   }
 
   private generateAuth() {
@@ -39,9 +64,5 @@ export class TwitchService implements OnModuleInit {
         },
       }
     )
-  }
-
-  private onMessage(channel: string, user: string, message: string) {
-    console.log({ channel, user, message })
   }
 }
