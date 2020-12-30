@@ -6,7 +6,7 @@ export function parseMessage(message: string) {
     return null
   }
 
-  const x = matches[1].charCodeAt(0) - 96
+  const x = matches[1].toLowerCase().charCodeAt(0) - 96
   if (x <= 0 || x > MAX_TILES) {
     return null
   }
