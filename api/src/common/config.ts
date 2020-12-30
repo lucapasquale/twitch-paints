@@ -9,5 +9,8 @@ export const config = () => ({
   twitch: {
     clientId: process.env.TWITCH_CLIENT_ID,
     clientSecret: process.env.TWITCH_CLIENT_SECRET,
+
+    accessToken: process.env.TWITCH_ACCESS_TOKEN,
+    refreshToken: process.env.TWITCH_REFRESH_TOKEN,
   },
 })

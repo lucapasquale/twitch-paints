@@ -35,6 +35,3 @@ lerna-debug.log*
 
 # ENV vars
 env/.dev.env
-
-# others
-tokens.json

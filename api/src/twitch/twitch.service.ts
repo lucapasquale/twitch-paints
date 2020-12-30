@@ -45,23 +45,14 @@ export class TwitchService implements OnModuleInit {
   }
 
   private generateAuth() {
-    const tokenData = JSON.parse(fs.readFileSync('./tokens.json', { encoding: 'utf-8' }))
-
     return new RefreshableAuthProvider(
-      new StaticAuthProvider(this.configService.get('twitch.clientId'), tokenData.accessToken),
+      new StaticAuthProvider(
+        this.configService.get('twitch.clientId'),
+        this.configService.get('twitch.accessToken')
+      ),
       {
         clientSecret: this.configService.get('twitch.clientSecret'),
-        refreshToken: tokenData.refreshToken,
-        expiry: tokenData.expiryTimestamp === null ? null : new Date(tokenData.expiryTimestamp),
-        onRefresh: async ({ accessToken, refreshToken, expiryDate }) => {
-          const newTokenData = {
-            accessToken,
-            refreshToken,
-            expiryTimestamp: expiryDate === null ? null : expiryDate.getTime(),
-          }
-
-          fs.writeFileSync('./tokens.json', JSON.stringify(newTokenData, null, 4), 'UTF-8')
-        },
+        refreshToken: this.configService.get('twitch.refreshToken'),
       }
     )
   }

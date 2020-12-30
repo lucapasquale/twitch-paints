@@ -17,7 +17,7 @@ import { TwitchModule } from './twitch/twitch.module'
       useFactory: async (config: ConfigService) => ({
         type: 'postgres',
         url: config.get('pgUri'),
-        entities: ['dist/**/*.entity{.ts,.js}'],
+        entities: ['dist/**/*.entity{.ts,.js}', __dirname + '/**/*.entity{.ts,.js}'],
         namingStrategy: new SnakeNamingStrategy(),
       }),
     }),
