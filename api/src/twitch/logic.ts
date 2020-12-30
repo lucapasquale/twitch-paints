@@ -6,13 +6,15 @@ export function parseMessage(message: string) {
     return null
   }
 
-  const x = matches[1].charCodeAt(0) - 97
-  if (x < 0 || x >= MAX_TILES) {
+  const x = matches[1].charCodeAt(0) - 96
+  console.log({ x })
+  if (x <= 0 || x > MAX_TILES) {
     return null
   }
 
   const y = parseInt(matches[2])
-  if (y < 0 || y >= MAX_TILES) {
+  console.log({ y })
+  if (y <= 0 || y > MAX_TILES) {
     return null
   }
 

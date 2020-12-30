@@ -30,7 +30,7 @@ export const Board: FC<Props> = ({}) => {
     context.canvas.width = CANVAS_SIZE_PX
     context.canvas.height = CANVAS_SIZE_PX
     //Our first draw
-    context.fillStyle = '#000000'
+    context.fillStyle = '#FFFFFF'
     context.fillRect(0, 0, context.canvas.width, context.canvas.height)
   }, [loading])
 
@@ -63,5 +63,5 @@ function drawTile(tile: Tile, context: CanvasRenderingContext2D) {
   }
 
   context.fillStyle = tile.color
-  context.fillRect(TILE_SIZE * tile.x, TILE_SIZE * tile.y, TILE_SIZE, TILE_SIZE)
+  context.fillRect(TILE_SIZE * (tile.x - 1), TILE_SIZE * (tile.y - 1), TILE_SIZE, TILE_SIZE)
 }

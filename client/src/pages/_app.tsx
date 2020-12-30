@@ -1,3 +1,4 @@
+import '../styles.css'
 import React from 'react'
 import { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
